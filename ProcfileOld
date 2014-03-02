@@ -1,1 +1,0 @@
-web: cd recipes_project; gunicorn recipes_project.wsgi --settings=recipes_project.settings.production

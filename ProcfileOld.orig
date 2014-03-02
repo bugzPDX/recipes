@@ -1,1 +1,0 @@
-web: cd rango_project; gunicorn rango_project.wsgi --settings=rango_project.settings.production
