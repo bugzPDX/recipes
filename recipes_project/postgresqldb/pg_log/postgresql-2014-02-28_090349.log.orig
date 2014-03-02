@@ -1,5 +1,0 @@
-2014-02-28 09:03:49 PST LOG:  database system was shut down at 2014-02-28 09:03:47 PST
-2014-02-28 09:03:49 PST LOG:  autovacuum launcher started
-2014-02-28 09:03:49 PST LOG:  database system is ready to accept connections
-2014-02-28 09:03:57 PST FATAL:  password authentication failed for user "postgres"
-2014-02-28 09:03:57 PST DETAIL:  Connection matched pg_hba.conf line 80: "local   all             all                                     md5"
