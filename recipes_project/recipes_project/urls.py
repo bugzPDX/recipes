@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^recipes/', include('recipes.urls')),
+    url(r'^', include('recipes.urls')),
 )
 
 if settings.DEBUG:
