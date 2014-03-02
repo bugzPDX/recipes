@@ -1,4 +1,5 @@
-env/
+recipes_env/
+recipes_project/recipes.db
 *.sw?
 *.pyc
 *~
