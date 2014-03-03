@@ -1,7 +1,7 @@
 <ul class="nav nav-list">
     {% if cat_list %}
         {% for cat in cat_list %}
-            <li><a href="/recipes/category/{{ cat.url }}">{{ cat.name }}</a></li>
+        <li><a href="{% url 'category' cat.url %}">{{ cat.name }}</a></li>
         {% endfor %}
     {% else %}
         <li>No categories at present.</li>

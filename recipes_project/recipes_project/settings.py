@@ -16,7 +16,7 @@ PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'recipes.db')
 
-LOGIN_URL = '/recipes/login/'
+LOGIN_URL = '/login/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
@@ -77,16 +77,6 @@ LOGGING = {
 SESSION_COOKIE_AGE = 600000
 
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DATABASE_PATH,
-    }
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -112,7 +102,7 @@ STATICFILES_DIRS = (
 )
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = {'default': dj_database_url.config(default="sqlite:///" + DATABASE_PATH)}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

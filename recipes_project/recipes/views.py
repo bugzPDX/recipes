@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from recipes.models import Category, Page, UserProfile
@@ -18,7 +19,7 @@ def user_logout(request):
     logout(request)
 
     #Take the user back to the homepage
-    return HttpResponseRedirect('/recipes/')
+    return HttpResponseRedirect(reverse('index'))
 
 
 @login_required
@@ -75,7 +76,7 @@ def auto_add_page(request):
         title = request.GET['title']
         if cat_id:
             category = Category.objects.get(id=int(cat_id))
-            p = Page.objects.get_or_create(category=category, title=title, url=url)
+            Page.objects.get_or_create(category=category, title=title, url=url)
 
             pages = Page.objects.filter(category=category).order_by('-views')
 
@@ -102,7 +103,7 @@ def search(request):
 def track_url(request):
     # context = RequestContext(request)
     page_id = None
-    url = '/recipes/'
+    url = reverse('index')
     if request.method == 'GET':
         if 'page_id' in request.GET:
             page_id = request.GET['page_id']
@@ -171,14 +172,14 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in
                 # We'll send the user back to the homepage
                 login(request, user)
-                return HttpResponseRedirect('/recipes/')
+                return HttpResponseRedirect(reverse('index'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your Recipes account is disabled.")
         else:
             # Bad login details were provided. So we can't log the user in
             print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponseRedirect('/recipes/login')
+            return HttpResponseRedirect(reverse('login'))
 
     # The request is not a HTTP POST, so display the login form
     # This scenario would most likely be a HTTP GET

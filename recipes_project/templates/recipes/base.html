@@ -20,26 +20,26 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
            </button>
-           <a class="brand" href="/recipes/">Recipes</a>
+           <a class="brand" href="/">Recipes</a>
 
            <div class="nav-collapse collapse">
                <ul class="nav pull-right">
                     {% if user.is_authenticated %}
                     <li class="navbar-text">Welcome, {{ user.username }}!</li>
-                    <li><a href="/recipes/logout/">Logout</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                    <li><a href="/recipes/register/">Register Here</a></li>
-                    <li><a href="/recipes/login/">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
                 </ul>
                 <ul class="nav">
                     {% if user.is_authenticated %}
-                    <li><a href="/recipes/restricted/">Restricted Page</a></li>
-                    <li><a href="/recipes/add_category/">Add a New Category</a></li>
-                    <li><a href="/recipes/profile">Profile</a></li>
+                    <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+                    <li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     {% endif %}
 
-                    <li><a href="/recipes/about/">About</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
                 </ul>
             </div>
         </div>
@@ -88,7 +88,7 @@
 <hr>
 <footer>
     <div class="container">
-        <p>&copy; Recipes: How to Tango with Django 2013</p>
+        <p>&copy; Recipes: A Collection from Here and There 2014</p>
     </div>
 </footer>
         <script src="{% static 'js/jquery-2.1.0.js' %}"></script>

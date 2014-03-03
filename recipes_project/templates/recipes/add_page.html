@@ -10,7 +10,7 @@
         {% if not category_name_url %}
             <div style="color: red;">The specified page does not exist!</div>
         {% else %}
-        <form class="span6" id="page_form" method="post" action="/recipes/category/{{ category_name_url }}/add_page/">
+        <form class="span6" id="page_form" method="post" action="/category/{{ category_name_url }}/add_page/">
 
                 {% csrf_token %}
                 {% for hidden in form.hidden_fields %}
