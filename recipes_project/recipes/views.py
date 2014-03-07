@@ -12,6 +12,7 @@ from recipes.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from recipes.bing_search import run_query
 
 
+# I definitely want the ability to log in and out so this should stay
 # Use the login_required() decorator to ensure only those logged in can access the view
 @login_required
 def user_logout(request):
@@ -22,6 +23,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
+# I don't think I need a restricted page for anything
 @login_required
 def restricted(request):
     context = RequestContext(request)
@@ -30,6 +32,7 @@ def restricted(request):
 
     return render_to_response('recipes/restricted.html', context_dict, context)
 
+# I don't think I need a profile page 
 @login_required
 def profile(request):
     context = RequestContext(request)
@@ -46,6 +49,7 @@ def profile(request):
     context_dict['userprofile'] = up
     return render_to_response('recipes/profile.html', context_dict, context)
 
+# I was thinking this would be a good place for recipe ratings instead of likes
 @login_required
 def like_category(request):
     # context = RequestContext(request)
@@ -63,6 +67,8 @@ def like_category(request):
 
     return HttpResponse(likes)
 
+# I definitely want to be able to add recipes with title, ingredients,
+# directions, source, notes and possibly other stuff.
 @login_required
 def auto_add_page(request):
     context = RequestContext(request)
@@ -85,6 +91,8 @@ def auto_add_page(request):
 
     return render_to_response('recipes/page_list.html', context_dict, context)
 
+# I want to be able to search the recipes and have web results returned
+# in addition to local recipes.
 def search(request):
     context = RequestContext(request)
     cat_list = get_category_list()
@@ -100,6 +108,7 @@ def search(request):
 
     return render_to_response('recipes/search.html', context_dict, context)
 
+# I don't really remember what this was for
 def track_url(request):
     # context = RequestContext(request)
     page_id = None
@@ -118,6 +127,7 @@ def track_url(request):
     return redirect(url)
 
 
+# I don't really need to list categories by most popular but I guess it wouldn't hurt
 def get_category_list(max_results=0, starts_with=''):
         cat_list = []
         if starts_with:
@@ -134,6 +144,7 @@ def get_category_list(max_results=0, starts_with=''):
 
         return cat_list
 
+# I don't think I need this unless it matters for adding categories
 def suggest_category(request):
         context = RequestContext(request)
         cat_list = []
@@ -146,6 +157,7 @@ def suggest_category(request):
         return render_to_response('recipes/category_list.html', {'cat_list': cat_list }, context)
 
 
+# Definitely want log in access for add, modify, delete rights
 def user_login(request):
     # Like before, obtain the context for the user's request
     context = RequestContext(request)
@@ -188,6 +200,7 @@ def user_login(request):
         # blank dictionary object...
         return render_to_response('recipes/login.html', context_dict, context)
 
+# I don't want/need people to be able to register
 def register(request):
     #Like before, get the request's context
     context = RequestContext(request)
@@ -249,6 +262,7 @@ def register(request):
     # Render the template depending on the context
     return render_to_response('recipes/register.html', context_dict, context)
 
+# I will want to add recipe pages
 def add_page(request, category_name_url):
     context = RequestContext(request)
     cat_list = get_category_list()
@@ -293,6 +307,8 @@ def add_page(request, category_name_url):
 
     return render_to_response('recipes/add_page.html', context_dict, context)
 
+# I will want to add categories and possibly have recipes in more than one
+# category. Not sure yet.
 def add_category(request):
     # Get the context from the request
     context = RequestContext(request)
@@ -322,6 +338,7 @@ def add_category(request):
     # Render the form with error messages (if any).
     return render_to_response('recipes/add_category.html', context_dict, context)
 
+# I need categories for sure
 def category(request, category_name_url):
     # Request our context from the request passed to us.
     context = RequestContext(request)
@@ -365,6 +382,7 @@ def category(request, category_name_url):
     # Go render the response and return it to the client.
     return render_to_response('recipes/category.html', context_dict, context)
 
+# I'll want an index page of course
 def index(request):
     # Request the context of the request.
     # The context contains information such as the client's machine details, for example.
@@ -423,12 +441,15 @@ def index(request):
     # Note that the first parameter is the template we wish to use.
     return render_to_response('recipes/index.html', context_dict, context)
 
+# I will keep both encode and decode url
 def encode_url(str):
     return str.replace(' ', '_')
 
 def decode_url(str):
     return str.replace('_', ' ')
 
+# I suppose I can have an about page that explains the purpose
+# of the recipe site along with some contact info just in case.
 def about(request):
     context = RequestContext(request)
     cat_list = get_category_list()
