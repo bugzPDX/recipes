@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
-from recipes.models import Category, Page, UserProfile
-from recipes.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from recipes.models import Category, Recipe, UserProfile
+from recipes.forms import CategoryForm, RecipeForm, UserForm, UserProfileForm
 from recipes.bing_search import run_query
 
 
@@ -70,7 +70,7 @@ def like_category(request):
 # I definitely want to be able to add recipes with title, ingredients,
 # directions, source, notes and possibly other stuff.
 @login_required
-def auto_add_page(request):
+def auto_add_recipe(request):
     context = RequestContext(request)
     cat_id = None
     url = None
@@ -82,14 +82,14 @@ def auto_add_page(request):
         title = request.GET['title']
         if cat_id:
             category = Category.objects.get(id=int(cat_id))
-            Page.objects.get_or_create(category=category, title=title, url=url)
+            Recipe.objects.get_or_create(category=category, title=title, url=url)
 
-            pages = Page.objects.filter(category=category).order_by('-views')
+            recipes = Recipe.objects.filter(category=category).order_by('-views')
 
             # Adds our results list to the template context under name pages.
-            context_dict['pages'] = pages
+            context_dict['recipes'] = recipes
 
-    return render_to_response('recipes/page_list.html', context_dict, context)
+    return render_to_response('recipes/recipe_list.html', context_dict, context)
 
 # I want to be able to search the recipes and have web results returned
 # in addition to local recipes.
@@ -263,7 +263,7 @@ def register(request):
     return render_to_response('recipes/register.html', context_dict, context)
 
 # I will want to add recipe pages
-def add_page(request, category_name_url):
+def add_recipe(request, category_name_url):
     context = RequestContext(request)
     cat_list = get_category_list()
 
@@ -285,7 +285,7 @@ def add_page(request, category_name_url):
                 # If we get here, the category does not exist
                 # We render the add_page.html template without a context dictionary
                 # This will trigger the red text to appear in the template!
-                return render_to_response('recipes/add_page.html', {}, context)
+                return render_to_response('recipes/add_recipe.html', {}, context)
 
             # Also, create a default value for the number of views
             page.views = 0
@@ -305,7 +305,7 @@ def add_page(request, category_name_url):
                     'cat_list': cat_list}
 
 
-    return render_to_response('recipes/add_page.html', context_dict, context)
+    return render_to_response('recipes/add_recipe.html', context_dict, context)
 
 # I will want to add categories and possibly have recipes in more than one
 # category. Not sure yet.
