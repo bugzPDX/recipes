@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+# Keep this as category and it only really needs a name
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
@@ -16,16 +17,21 @@ class Category(models.Model):
         return self.name
 
 
-class Page(models.Model):
+# Call this model Recipe and give it fields for directions, 
+# page source, notes, etc..
+class Recipe(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=128)
     url = models.URLField()
+    directions = models.TextField()
     views = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.title
 
 
+# Modify this model to be Ingredients. It should contain,
+# fields for quantity, units and name (ex. sugar, salt, water..)
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
