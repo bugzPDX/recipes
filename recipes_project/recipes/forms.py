@@ -14,7 +14,7 @@ class CategoryForm(forms.ModelForm):
 
 class RecipeForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the title of the recipe.")
-    directions = forms.TextField(help_text="Enter the recipe directions.")
+    directions = forms.CharField(widget=forms.Textarea, help_text="Enter the recipe directions.")
     url = forms.URLField(max_length=200, help_text="Please enter the URL of the recipe.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 

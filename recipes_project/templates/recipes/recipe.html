@@ -1,0 +1,19 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}{{ recipe_name }} {% endblock %}
+
+{% block body_block %}
+<div class="hero-unit">
+    <h1>{{ recipe.title }}</h1>
+    <br>
+    <div class="container">
+        {% if not recipe %}
+            <div style="color: red;">The specified recipe does not exist!</div>
+        {% else %}
+        <div>
+            {{ recipe.directions }}
+        </div>
+        <a href="{% url 'track_url' %}?recipe_id={{ recipe.id }}">{{ recipe.url }}</a>
+        {% endif %}
+    </div>
+{% endblock %}

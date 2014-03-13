@@ -111,16 +111,16 @@ def search(request):
 # I don't really remember what this was for
 def track_url(request):
     # context = RequestContext(request)
-    page_id = None
+    recipe_id = None
     url = reverse('index')
     if request.method == 'GET':
-        if 'page_id' in request.GET:
-            page_id = request.GET['page_id']
+        if 'recipe_id' in request.GET:
+            recipe_id = request.GET['recipe_id']
             try:
-                page = Page.objects.get(id=page_id)
-                page.views = page.views + 1
-                page.save()
-                url = page.url
+                recipe = Recipe.objects.get(id=recipe_id)
+                recipe.views = recipe.views + 1
+                recipe.save()
+                url = recipe.url
             except:
                 pass
 
@@ -269,7 +269,7 @@ def add_recipe(request, category_name_url):
 
     category_name = decode_url(category_name_url)
     if request.method == 'POST':
-        form = PageForm(request.POST)
+        form = RecipeForm(request.POST)
 
         if form.is_valid():
             # This time we cannot commit straight away
@@ -298,7 +298,7 @@ def add_recipe(request, category_name_url):
         else:
             print form.errors
     else:
-        form = PageForm()
+        form = RecipeForm()
 
     context_dict = {'category_name_url': category_name_url,
                     'category_name': category_name, 'form': form,
@@ -362,10 +362,10 @@ def category(request, category_name_url):
 
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
-        pages = Page.objects.filter(category=category).order_by('-views')
+        recipes = Recipe.objects.filter(category=category).order_by('-views')
 
         # Adds our results list to the template context under name pages.
-        context_dict['pages'] = pages
+        context_dict['recipes'] = recipes
 
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
@@ -381,6 +381,17 @@ def category(request, category_name_url):
 
     # Go render the response and return it to the client.
     return render_to_response('recipes/category.html', context_dict, context)
+
+def recipe(request, recipe_id):
+    context = RequestContext(request)
+    context_dict = {}
+    try:
+        context_dict['recipe'] = Recipe.objects.get(pk=recipe_id)
+    except Recipe.DoesNotExist:
+        pass
+
+    return render_to_response('recipes/recipe.html', context_dict, context)
+
 
 # I'll want an index page of course
 def index(request):
@@ -404,8 +415,8 @@ def index(request):
        # category.url = category.name.replace(' ', '_')
        category.url = encode_url(category.name)
 
-    page_list = Page.objects.order_by('-views')[:5]
-    context_dict['pages'] = page_list
+    recipe_list = Recipe.objects.order_by('-views')[:5]
+    context_dict['recipes'] = recipe_list
 
     #Obtain our Response object early so we can add cookie info
     # response = render_to_response('recipes/index.html', context_dict, context)

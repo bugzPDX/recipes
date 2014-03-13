@@ -55,7 +55,7 @@
             <ul>
                 {% for recipe in recipes %}
                 <li>
-                    <a href="/recipes/goto/?recipe_id={{recipe.id}}">{{recipe.title}}</a>
+                    <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a>
                     {% if recipe.views > 1 %}
                         - ({{ recipe.views }} views)
                     {% elif recipe.views == 1 %}

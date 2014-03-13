@@ -4,7 +4,7 @@
 {% block body_block %}
 <div class="hero-unit">
     <h1>Ready to Recipes</h1>
-    <p>Find, Add, Share and Recipes useful links and resources.</p>
+    <p>Find, Add, Share Recipes Useful Links and Resources.</p>
 </div>
 
 <div class="row-fluid">
@@ -23,15 +23,15 @@
     </div>
     <!--/span-->
     <div class="span6">
-        <h2>Top Five Pages</h2>
-        {% if pages %}
+        <h2>Top Five Recipes</h2>
+        {% if recipes %}
         <ul>
-            {% for page in pages %}
-            <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.category }} ({{ page.views }} view(s))</li>
+            {% for recipe in recipes %}
+            <li><a href="{{ recipe.url}}">{{ recipe.title }}</a> - {{ recipe.category }} ({{ recipe.views }} view(s))</li>
             {% endfor %}
         </ul>
         {% else %}
-        <strong>No pages at present.</strong>
+        <strong>No recipes at present.</strong>
         {% endif %}
 
     </div>

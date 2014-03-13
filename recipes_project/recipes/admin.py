@@ -1,5 +1,5 @@
 from django.contrib import admin
-from recipes.models import Category, Page, UserProfile
+from recipes.models import Category, Recipe, UserProfile
 
 
 class PageAdmin(admin.ModelAdmin):
@@ -8,5 +8,5 @@ class PageAdmin(admin.ModelAdmin):
 # Register your models here.
 
 admin.site.register(Category)
-admin.site.register(Page, PageAdmin)
+admin.site.register(Recipe, PageAdmin)
 admin.site.register(UserProfile)
