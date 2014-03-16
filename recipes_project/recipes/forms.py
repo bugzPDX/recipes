@@ -2,6 +2,7 @@ from django import forms
 from recipes.models import Recipe, Category, UserProfile
 from django.contrib.auth.models import User
 
+
 class CategoryForm(forms.ModelForm):
     name  = forms.CharField(max_length=128, help_text="Please enter a category name.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -13,10 +14,10 @@ class CategoryForm(forms.ModelForm):
         model = Category
 
 class RecipeForm(forms.ModelForm):
-    title = forms.CharField(max_length=128, help_text="Please enter the title of the recipe.")
-    directions = forms.CharField(widget=forms.Textarea, help_text="Enter the recipe directions.")
-    url = forms.URLField(max_length=200, help_text="Please enter the URL of the recipe.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    #title = forms.CharField(max_length=128, help_text="Please enter the title of the recipe.")
+    #directions = forms.CharField(widget=forms.Textarea, help_text="Enter the recipe directions.")
+    #url = forms.URLField(max_length=200, help_text="Please enter the URL of the recipe.")
+    #views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -34,7 +35,7 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
 
         # Here we are hiding the foreign key.
-        fields = ('title','directions', 'url', 'views')
+        fields = ('category', 'title', 'directions', 'url', 'views')
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Please enter a username")

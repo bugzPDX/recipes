@@ -1,13 +1,31 @@
 {% extends 'recipes/base.html' %}
 
-{% block title %}This is the Index Page{% endblock %}
+{% block title %}Lisa's Recipe Page{% endblock %}
 {% block body_block %}
 <div class="hero-unit">
-    <h1>Ready to Recipes</h1>
-    <p>Find, Add, Share Recipes Useful Links and Resources.</p>
+    <h1>Lisa's Recipes</h1>
+    <p>Find, Add, Share Recipes, Useful Links and Resources.</p>
+        <form class="form-search span8" id="search_form" method="post">
+            {% csrf_token %}                                                                                       <!-- Display the search form elements here -->                                                         <input type="text" class="input-long search-query" name="query"                                            data-catid="{{category.id}}" value="{{ query }}" id="recipe_suggest" />                            <button class="btn btn-primary" type="submit" name="submit"
+                value="Search" />Search</button>                                                                   <br />                                                                                             </form>
 </div>
 
+{% if query %}                                                                                         <div class="container-fluid">
+        {% if result_list %}                                                                                       <!-- Display search results in an ordered list -->                                                     <ol>
+                {% for result in result_list %}                                                                        <li>                                                                                           {% if user.is_authenticated %}
+        <button data-catid="{{category.id}}" data-title="{{ result.title }}"                                       data-url="{{ result.link }}" class="recipes-add btn btn-mini btn-info"                                 type="button">Add</button>
+        {% endif %}                                                                                                                                                                                                               <strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
+                    <p>{{ result.summary }}</p>                                                                        </li>                                                                                                  {% endfor %}
+            </ol>
+        {% else %}
+            <br/>
+            <p>No results found</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
 <div class="row-fluid">
+    <div id="recps">
     <div class="span6">
         <h2>Top Five Categories</h2>
         {% if categories %}
@@ -27,7 +45,7 @@
         {% if recipes %}
         <ul>
             {% for recipe in recipes %}
-            <li><a href="{{ recipe.url}}">{{ recipe.title }}</a> - {{ recipe.category }} ({{ recipe.views }} view(s))</li>
+            <li><a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a> - {{ recipe.category }} ({{ recipe.views }} view(s))</li>
             {% endfor %}
         </ul>
         {% else %}
@@ -35,6 +53,7 @@
         {% endif %}
 
     </div>
+</div>
     <!--/span-->
 </div>
 <!--/row-->

@@ -1,0 +1,16 @@
+<ul>
+    {% if recipe_list %}
+        {% for recipe in recipe_list %}
+        <li>
+            <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a>
+            {% if recipe.views > 1 %}
+                - ({{ recipe.views }} views)
+            {% elif recipe.views == 1 %}
+                - ({{ recipe.views }} view)
+            {% endif %}
+        </li>
+        {% endfor %}
+    {% else %}
+        <li>No recipes at present.</li>
+    {% endif %}
+</ul>

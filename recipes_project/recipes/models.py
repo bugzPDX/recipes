@@ -20,10 +20,10 @@ class Category(models.Model):
 # Call this model Recipe and give it fields for directions, 
 # page source, notes, etc..
 class Recipe(models.Model):
-    category = models.ForeignKey(Category)
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    directions = models.TextField()
+    category = models.ForeignKey(Category, help_text="Choose a Category")
+    title = models.CharField(max_length=128, help_text="Please enter the title of the recipe.")
+    url = models.URLField(help_text="Please enter the URL of the recipe.")
+    directions = models.TextField(help_text="Please enter the recipe directions.")
     views = models.IntegerField(default=0)
 
     def __unicode__(self):

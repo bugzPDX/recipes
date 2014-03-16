@@ -4,14 +4,19 @@
 
 {% block body_block %}
 <div class="hero-unit">
-    <h1>{{ recipe.title }}</h1>
+    <h2>{{ recipe.title }}</h2>
     <br>
-    <div class="container">
         {% if not recipe %}
-            <div style="color: red;">The specified recipe does not exist!</div>
+        <div style="color: red;">
+            The specified recipe does not exist!
+        </div>
         {% else %}
-        <div>
+        <div style="word-wrap: break-word;">
             {{ recipe.directions }}
+        </div>
+        <div>
+            {# <a href="{% url 'edit_recipe' recipe.id %}">Edit</a> #}
+            <a href="/recipe/{{ recipe.id }}/edit/" class="btn btn-primary btn-sm" role="button">Edit</a>
         </div>
         <a href="{% url 'track_url' %}?recipe_id={{ recipe.id }}">{{ recipe.url }}</a>
         {% endif %}

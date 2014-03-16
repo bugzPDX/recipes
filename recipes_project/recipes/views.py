@@ -87,7 +87,7 @@ def auto_add_recipe(request):
             recipes = Recipe.objects.filter(category=category).order_by('-views')
 
             # Adds our results list to the template context under name pages.
-            context_dict['recipes'] = recipes
+            context_dict['recipes_list'] = recipes
 
     return render_to_response('recipes/recipe_list.html', context_dict, context)
 
@@ -155,6 +155,40 @@ def suggest_category(request):
         cat_list = get_category_list(8, starts_with)
 
         return render_to_response('recipes/category_list.html', {'cat_list': cat_list }, context)
+
+def get_recipe_list(max_results=0, is_in='', category_id=None):
+        recipe_list = []
+
+        if category_id:
+            recipe_list = Recipe.objects.filter(category=category_id)
+        else:
+            recipe_list = Recipe.objects.all()
+
+        if is_in:
+            recipe_list = recipe_list.filter(title__icontains=is_in)
+
+        if max_results > 0:
+                if len(recipe_list) > max_results:
+                        recipe_list = recipe_list[:max_results]
+
+        return recipe_list
+
+  # I don't think I need this unless it matters for adding categories
+def suggest_recipe(request):
+        context = RequestContext(request)
+        recipe_list = []
+        is_in = ''
+        category_id = None 
+        if request.method == 'GET':
+                is_in = request.GET['recipe_suggest']
+                try:
+                    category_id = request.GET['category_id']
+                except:
+                    pass
+
+        recipe_list = get_recipe_list(8, is_in, category_id)
+
+        return render_to_response('recipes/recipe_list.html', {'recipe_list': recipe_list }, context)
 
 
 # Definitely want log in access for add, modify, delete rights
@@ -263,46 +297,43 @@ def register(request):
     return render_to_response('recipes/register.html', context_dict, context)
 
 # I will want to add recipe pages
-def add_recipe(request, category_name_url):
+def add_recipe(request, recipe_id=None):
     context = RequestContext(request)
     cat_list = get_category_list()
+    recipe = None
+    editing = False
+    my_title = "Add a Recipe"
 
-    category_name = decode_url(category_name_url)
+    if recipe_id:
+        try:
+            recipe = Recipe.objects.get(pk=recipe_id)
+            editing = True
+            my_title = "Edit a recipe"
+        except Recipe.DoesNotExist:
+            pass
+
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, instance=recipe)
 
         if form.is_valid():
             # This time we cannot commit straight away
             # Not all fields are automatically populated!
-            page = form.save(commit=False)
-
-            # Retrieve the associated Category object so we can add it
-            # Wrap the code in a try block - check if the category actually exists!
-            try:
-                cat = Category.objects.get(name=category_name)
-                page.category = cat
-            except Category.DoesNotExists:
-                # If we get here, the category does not exist
-                # We render the add_page.html template without a context dictionary
-                # This will trigger the red text to appear in the template!
-                return render_to_response('recipes/add_recipe.html', {}, context)
+            recipe = form.save(commit=False)
 
             # Also, create a default value for the number of views
-            page.views = 0
+            recipe.views = 0
 
             # With this, we can then save our new model instance.
-            page.save()
+            recipe.save()
 
-            # Now that the page is saved, display the category instead.
-            return category(request, category_name_url)
+            # Now that the recipe is saved, display the category instead.
+            return show_recipe(request, recipe.id)
         else:
             print form.errors
     else:
-        form = RecipeForm()
-
-    context_dict = {'category_name_url': category_name_url,
-                    'category_name': category_name, 'form': form,
-                    'cat_list': cat_list}
+        form = RecipeForm(instance=recipe)
+        context_dict = {'editing': editing, 'form': form,
+                        'cat_list': cat_list, 'my_title': my_title}
 
 
     return render_to_response('recipes/add_recipe.html', context_dict, context)
@@ -360,12 +391,8 @@ def category(request, category_name_url):
         category = Category.objects.get(name__iexact=category_name)
         context_dict['category'] = category
 
-        # Retrieve all of the associated pages.
-        # Note that filter returns >= 1 model instance.
-        recipes = Recipe.objects.filter(category=category).order_by('-views')
-
         # Adds our results list to the template context under name pages.
-        context_dict['recipes'] = recipes
+        context_dict['recipe_list'] = get_recipe_list(category_id=category.id).order_by('-views')
 
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
@@ -377,12 +404,13 @@ def category(request, category_name_url):
         if query:
             query = query.strip()
             result_list = run_query(query)
+            context_dict['query'] = query
             context_dict['result_list'] = result_list
 
     # Go render the response and return it to the client.
     return render_to_response('recipes/category.html', context_dict, context)
 
-def recipe(request, recipe_id):
+def show_recipe(request, recipe_id):
     context = RequestContext(request)
     context_dict = {}
     try:
@@ -418,14 +446,8 @@ def index(request):
     recipe_list = Recipe.objects.order_by('-views')[:5]
     context_dict['recipes'] = recipe_list
 
-    #Obtain our Response object early so we can add cookie info
-    # response = render_to_response('recipes/index.html', context_dict, context)
-
-    # Get the number of visits to the site
-    # We use the COOKIES.get() function to obtain the visits cookie
-    # If the cookie exists, the value returned is casted to an integer
-    # If the cookie doesn't exist, we default to zero and cast that
-    # visits = int(request.COOKIES.get('visits', '0'))
+    default_category = Category.objects.get(name='Unfiled')
+    context_dict['category'] = default_category
 
     # Does the cookie last_visit exist?
     if request.session.get('last_visit'):
@@ -446,6 +468,13 @@ def index(request):
         request.session['last_visit'] = str(datetime.now())
         request.session['visits'] = 1
 
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        if query:
+            query = query.strip()
+            result_list = run_query(query)
+            context_dict['query'] = query
+            context_dict['result_list'] = result_list
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
