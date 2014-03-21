@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'recipes',
     'gunicorn',
+    'markitup',
+    'south',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -67,6 +69,7 @@ TEMPLATE_DIRS = (
 ROOT_URLCONF = 'recipes_project.urls'
 
 WSGI_APPLICATION = 'recipes_project.wsgi.application'
+MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 LOGGING = {
     'version': 1,

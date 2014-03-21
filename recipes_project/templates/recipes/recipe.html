@@ -1,4 +1,5 @@
 {% extends 'recipes/base.html' %}
+{% load markitup_tags %}
 
 {% block title %}{{ recipe_name }} {% endblock %}
 
@@ -11,8 +12,15 @@
             The specified recipe does not exist!
         </div>
         {% else %}
+        <div>
+            <ul>
+            {% for ingredient in recipe.ingredients.all %}
+            <li>{{ ingredient }}</li>
+            {% endfor %}
+            </ul>
+        </div>
         <div style="word-wrap: break-word;">
-            {{ recipe.directions }}
+            {{ recipe.directions | render_markup | safe }}
         </div>
         <div>
             {# <a href="{% url 'edit_recipe' recipe.id %}">Edit</a> #}

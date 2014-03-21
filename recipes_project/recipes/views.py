@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
-from recipes.models import Category, Recipe, UserProfile
-from recipes.forms import CategoryForm, RecipeForm, UserForm, UserProfileForm
+from recipes.models import Category, Recipe, UserProfile, Ingredient
+from recipes.forms import CategoryForm, RecipeForm, UserForm, UserProfileForm, IngredientForm, RecipeIngredientForm
 from recipes.bing_search import run_query
 
 
@@ -296,6 +296,59 @@ def register(request):
     # Render the template depending on the context
     return render_to_response('recipes/register.html', context_dict, context)
 
+def add_recipe_ingredient(request, recipe_id):
+    context = RequestContext(request)
+
+    recipe = Recipe.objects.get(pk=recipe_id)
+    context_dict = {'recipe': recipe}
+
+    if request.method == 'POST':
+        form = RecipeIngredientForm(request.POST)
+
+        if form.is_valid():
+            recipe_ingredients = form.save(commit=False)
+            recipe_ingredients.recipe = recipe
+            recipe_ingredients.save()
+            form = RecipeIngredientForm()
+        else:
+            print form.errors
+    else:
+        form = RecipeIngredientForm()
+
+    context_dict['form'] = form
+
+    return render_to_response('recipes/add_recipe_ingredient.html', context_dict, context)
+
+
+def add_ingredient(request):
+    context = RequestContext(request)
+  #  ing_list = get_category_list()
+
+      # A HTTP POST?
+    if request.method == 'POST':
+        form = IngredientForm(request.POST)
+
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database
+            form.save(commit=True)
+
+            # Now call the index() view.
+            # The user will be shown the homepage
+            form = IngredientForm()
+        else:
+    # The supplied form contained errors - just print them to the termina  l
+            print form.errors
+    else:
+        # If the request was not a POST, display the form to enter details
+        form = IngredientForm()
+    context_dict = {'form': form}
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render_to_response('recipes/add_ingredient.html', context_dict, context)
+
+
 # I will want to add recipe pages
 def add_recipe(request, recipe_id=None):
     context = RequestContext(request)
@@ -364,7 +417,6 @@ def add_category(request):
         # If the request was not a POST, display the form to enter details
         form = CategoryForm()
         context_dict = {'cat_list': cat_list, 'form': form}
-
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
     return render_to_response('recipes/add_category.html', context_dict, context)

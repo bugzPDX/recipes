@@ -1,7 +1,22 @@
 from django import forms
-from recipes.models import Recipe, Category, UserProfile
+from django.utils.translation import ugettext as _
+from recipes.models import Recipe, Category, UserProfile, Ingredient, RecipeIngredient
 from django.contrib.auth.models import User
 
+class RecipeIngredientForm(forms.ModelForm):
+
+    class Meta:
+        model = RecipeIngredient
+        fields = ('quantity', 'unit', 'ingredient')
+        labels = {
+            'unit': _("Unit (optional)"),
+        }
+
+class IngredientForm(forms.ModelForm):
+
+    class Meta:
+        model = Ingredient
+        fields = ('name',)
 
 class CategoryForm(forms.ModelForm):
     name  = forms.CharField(max_length=128, help_text="Please enter a category name.")

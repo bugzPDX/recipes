@@ -1,0 +1,28 @@
+{% extends 'recipes/base.html' %}
+
+
+{% block body_block %}
+<div class="hero-unit">
+    <h1>Add Ingredient</h1>
+    <br>
+    <div class="container">
+        <form class="span6" id="ingredient_form" method="post" >
+
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field }}
+                {{ field.help_text }}
+                <br/>
+            {% endfor %}
+
+            <button class="btn btn-primary" type="submit" name="submit">Add Ingredient</button>
+            <script type="text/javascript">$("#id_name").focus()</script>
+        </form>
+    </div>
+</div>
+{% endblock %}

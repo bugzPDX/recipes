@@ -6,7 +6,11 @@
     <h1>Lisa's Recipes</h1>
     <p>Find, Add, Share Recipes, Useful Links and Resources.</p>
         <form class="form-search span8" id="search_form" method="post">
-            {% csrf_token %}                                                                                       <!-- Display the search form elements here -->                                                         <input type="text" class="input-long search-query" name="query"                                            data-catid="{{category.id}}" value="{{ query }}" id="recipe_suggest" />                            <button class="btn btn-primary" type="submit" name="submit"
+            {% csrf_token %}
+            <!-- Display the search form elements here -->
+            <input type="text" class="input-long search-query" name="query"
+                value="{{ query }}" id="recipe_suggest" />
+            <button class="btn btn-primary" type="submit" name="submit"
                 value="Search" />Search</button>                                                                   <br />                                                                                             </form>
 </div>
 

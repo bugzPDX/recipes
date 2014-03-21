@@ -29,6 +29,30 @@ class Recipe(models.Model):
     def __unicode__(self):
         return self.title
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=128,unique=True, help_text="Enter an Ingredient")
+
+    def __unicode__(self):
+        return self.name
+
+class Unit(models.Model):
+    name = models.CharField(max_length=32, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name="ingredients")
+    quantity = models.FloatField(default=0.0)
+    unit = models.ForeignKey(Unit, blank=True, null=True)
+    ingredient = models.ForeignKey(Ingredient)
+
+
+    def __unicode__(self):
+        if not self.unit:
+            return "%g %s" % (self.quantity, self.ingredient)
+        else:
+            return "%g %s %s" % (self.quantity, self.unit, self.ingredient)
 
 # Modify this model to be Ingredients. It should contain,
 # fields for quantity, units and name (ex. sugar, salt, water..)
