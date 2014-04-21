@@ -1,10 +1,10 @@
-nguage: python
+language: python
 python:
   - "2.6"
   - "2.7"
   - "3.2"
   - "3.3"
 # command to install dependencies
-install: "sudo pip install -r requirements.txt"
+install: "pip install -r requirements.txt"
 # command to run tests
 script: "cd recipes_project && python manage.py test"
