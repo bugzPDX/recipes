@@ -5,6 +5,6 @@ python:
   - "3.2"
   - "3.3"
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install: "sudo pip install -r requirements.txt"
 # command to run tests
 script: "cd recipes_project && python manage.py test"
