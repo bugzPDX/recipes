@@ -1,1 +1,15 @@
-This project is a recipe site where I can keep my recipes
+This project is a recipe site where I can keep recipes that I find online or create myself.
+
+I would like the site to have the following features:
+
+    - Administrative login with permissions to add/modify/delete recipes
+    - Recipes searchable by ingredients and/or title
+    - Ability to "like" a recipe
+    - Separate fields for quantity, unit, ingredient, directions, source
+    - Ability to modify quantity and unit based on servings desired
+    - Ability to show nutritional information
+    - Ability to search site first then search web for recipe
+    - Ability to add link to recipe from web search
+    - Ability to add new categories as needed
+    - Ability to add photos
+    - Ability to link recipes to other recipes
