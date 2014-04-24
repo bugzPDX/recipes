@@ -3,3 +3,4 @@ recipes_project/recipes.db
 *.sw?
 *.pyc
 *~
+.DS_Store
