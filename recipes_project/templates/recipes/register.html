@@ -3,19 +3,21 @@
 {% block title %}You Have Reached Our Registration Page{% endblock %}
 
 {% block body_block %}
+
 <div class="hero-unit">
-        <h1>Register with Recipes</h1>
-        <br/>
+        <h1 >Register with Recipes</h1>
+    <img src="/static/peaches.jpg" alt"peaches" />
+              <br/>
         
     <div class="container">
         {% if registered %}
-        <p>Thank you for registering!<p>
         <p><a href="/recipes/login/">Login</a>when you are ready to recipes</p>
         <a href="/recipes/">Return to the homepage</a><br />
         {% else %}
 
         <form class="form-signin span8" id="user_form" method='post' action="/recipes/register/"
             ectype="multipart/form-data">
+            
 
             {% csrf_token %}
             <h2 class="form-signin-heading">Sign up Here</h2>
@@ -35,8 +37,13 @@
             <br />
             <!-- Provide a button to click to submit the form. -->
             <input class="btn btn-primary" type="submit" name="submit" value="Register"/>
+            
+
         </form>
         {% endif %}
+        
+
 </div>
+
 </div>
 {% endblock %}

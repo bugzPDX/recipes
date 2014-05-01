@@ -11,6 +11,8 @@
     <link href="{% static 'css/bootstrap-fluid-adj.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css'%}" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed|Vollkorn:400,700,400italic' rel='stylesheet' type='text/css'>
     <title>Recipes - {% block title %}A Collection{% endblock %}</title>
     </head>
 
@@ -51,9 +53,10 @@
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
+            		<img src="{% static "cucumber.png" %}" alt"cucumber" />
                 <!--- Empty for the timebeing -->
                 <ul class="nav nav-list">
-                    <li class="nav-header">Find a Category</li>
+                    <li style="font-family: Ubunto; class="nav-header">Find a Category</li>
                     <form>
                     <label></label>
                     <li><input  class="search-query span10" type="text"
@@ -86,6 +89,12 @@
     <!--/row-->
 </div>
 <!--/.fluid-container-->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <hr>
 <footer>

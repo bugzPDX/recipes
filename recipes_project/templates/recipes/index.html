@@ -3,8 +3,9 @@
 {% block title %}Lisa's Recipe Page{% endblock %}
 {% block body_block %}
 <div class="hero-unit">
-    <h1>Lisa's Recipes</h1>
-    <p>Find, Add, Share Recipes, Useful Links and Resources.</p>
+    <h1></h1>
+    <img src="static/dinnertitle3.jpg" alt"colorful salad" />
+    <p style="font-family: Ubunto; color: #7a6f66; font-size: 1.25em";>Find, Add, Share Recipes, Useful Links and Resources.</p>
         <form class="form-search span8" id="search_form" method="post">
             {% csrf_token %}
             <!-- Display the search form elements here -->
@@ -30,8 +31,9 @@
 
 <div class="row-fluid">
     <div id="recps">
+        
     <div class="span6">
-        <h2>Top Five Categories</h2>
+        <h2 style="font-family: Ubunto";>Top Five Categories</h2>
         {% if categories %}
         <ul>
             {% for category in categories %}
@@ -45,7 +47,7 @@
     </div>
     <!--/span-->
     <div class="span6">
-        <h2>Top Five Recipes</h2>
+        <h2 style="font-family: Ubunto";>Top Five Recipes</h2>
         {% if recipes %}
         <ul>
             {% for recipe in recipes %}
