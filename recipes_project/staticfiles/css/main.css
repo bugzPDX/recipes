@@ -1,0 +1,104 @@
+
+
+body {
+	font-size: 1em;
+	background-color: #f6f6f6;
+ 
+}
+
+.hav-header {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+}
+
+.navbar-inner {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+ 	background-color: #7a6f66;
+}
+.hero-unit {
+	background: none;
+	
+}
+
+.well {
+	background: #f6f6f6;
+	
+}
+	
+.container {
+	background: #f6f6f6;
+}
+
+.div container {
+	background-color: #7a6f66;
+}
+
+.navbar-fixed-top {
+  top: 0;
+  background-color: #7a6f66;
+}
+
+.span6 {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+	color: #7a6f66;
+}
+
+.span9 {
+	background-color: none;	
+}
+
+.span3 {
+	font-family: 'Ubuntu';
+	font-size: 1.25em;
+	color: #7a6f66;	
+	background-color: #f6f6f6
+}
+
+a {
+	text-decoration: none;
+}
+
+#wrapper {
+	max-width: 900px;
+	margin: 0 auto; 
+	
+}
+
+header {
+	background: #7a6f66
+}
+
+h1 {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+	color: #7a6f66; 
+}	
+h2 {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+	color: #7a6f66; 
+	
+} 
+
+footer {
+	font-family: Ubuntu;
+	font-size: 1.25em;
+	color: #7a6f66; 
+	background-color: #f6f6f6
+}
+
+/* nav a, nav a:visited {
+	color: #fff; */
+}
+
+/* nav a.selected nav a:hover{
+	color: #32673f;
+}
+
+
+
+/* div.container {
+	background-image:("static/peaches.jpg");*/
+}
