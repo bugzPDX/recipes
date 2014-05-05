@@ -1,15 +1,48 @@
+Recipes v0.1 - A Django 1.6.2 Based Recipe Website
+
+
 This project is a recipe site where I can keep recipes that I find online or create myself.
 
-I would like the site to have the following features:
 
-    - Administrative login with permissions to add/modify/delete recipes
-    - Recipes searchable by ingredients and/or title
-    - Ability to "like" a recipe
-    - Separate fields for quantity, unit, ingredient, directions, source
-    - Ability to modify quantity and unit based on servings desired
-    - Ability to show nutritional information
+
+Current features:
+
     - Ability to search site first then search web for recipe
     - Ability to add link to recipe from web search
     - Ability to add new categories as needed
+    - Administrative login with permissions to add/modify/delete recipes
+    - Recipes searchable by ingredients and/or title
+    - Ability to "like" a recipe
+
+Planned feature additions:
+
+    - Separate fields for quantity, unit, ingredient, directions, source
+    - Ability to modify quantity and unit based on servings desired
+    - Ability to show nutritional information
     - Ability to add photos
     - Ability to link recipes to other recipes
+    
+Dependencies:
+
+    - Pillow 2.4.0
+    - South 0.8.4
+    - dj-database-url 0.2.2
+    - dj-static 0.0.5
+    - django-markitup 2.1
+    - django-toolbelt 0.0.1
+    - gunicorn 18.0
+    - psycopg2 2.5.2
+    - pystache 0.5.3
+    - static 1.0.2
+    - wsgiref 0.1.2
+
+Contributing:
+
+    - I welcome contributions!
+    - Fork the repository
+    - Make your changes
+    - Send me a pull request
+    
+License:
+
+    - This software is released under the MIT license http://mit-license.org/
